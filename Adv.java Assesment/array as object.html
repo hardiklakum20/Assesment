@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+const sampleData = [
+  { path: '/index', ip: '123.456.789' },
+  { path: '/index/x', ip: '123.456.789' },
+  { path: '/index/', ip: '123.456.78' },
+  { path: '/index/y', ip: '123.456.789' },
+  { path: '/index/', ip: '123.456.89' },
+  { path: 'index/', ip: '123.456.9' },
+  { path: 'index', ip: '123.456.8' },
+  { path: '/index/', ip: '123.456.78' },
+  { path: '/index/x/', ip: '123.456.78' },
+  { path: 'index/x/', ip: '123.456.7' },
+  { path: 'index/x', ip: '123.456.6' },
+];
+console.log(
+  sampleData
+    .reduce((result, { path, ip }, idx, arr) => {
+
+      // sanitize/unify any path value
+      path = path.replace(/^\/+/, '').replace(/\/+$/, '');
+
+      // access and/or create a path specific
+      // set and add the `ip` value to it.
+      (result[path] ??= new Set).add(ip);
+
+      // within the last iteration step
+      // transform the aggregated object
+      // into the final result with the
+      // path specific unique ip count.      
+      if (idx === arr.length - 1) {
+        result = Object
+          .entries(result)
+          .reduce((obj, [path, set]) =>
+            Object.assign(obj, {
+              [path]: set.size
+            }), {}
+          );
+      }
+      return result;
+
+    }, {})
+);
+
+
+</script>

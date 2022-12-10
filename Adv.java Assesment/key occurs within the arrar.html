@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+     const arr = [2, 2, 5, 2, 2, 2, 4, 5, 5, 9];
+
+function foo (array) {
+  let a = [],
+    b = [],
+    arr = [...array], // clone array so we don't change the original when using .sort()
+    prev;
+
+  arr.sort();
+  for (let element of arr) {
+    if (element !== prev) {
+      a.push(element);
+      b.push(1);
+    }
+    else ++b[b.length - 1];
+    prev = element;
+  }
+
+  return [a, b];
+}
+
+const result = foo(arr);
+console.log('[' + result[0] + ']','[' + result[1] + ']')
+console.log(arr)
+
+</script>
